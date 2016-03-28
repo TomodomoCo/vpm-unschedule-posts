@@ -9,6 +9,12 @@ License: GPLv2
 Text Domain: vpm
 */
 
+$vpm_unschedule_posts = new Vpm_Unschedule_Posts();
+
 class Vpm_Unschedule_Posts {
+
+	public function __construct() {
+
+	}
 
 }
