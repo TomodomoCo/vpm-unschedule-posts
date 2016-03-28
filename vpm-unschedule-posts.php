@@ -73,13 +73,9 @@ class Vpm_Unschedule_Posts {
 	 * @param $post_ID int  ID of the WP_Post affected by the `save_post` action.
 	 */
 	public function process_post_save( $post_ID ) {
-		// If our custom parameter isn't set, we don't need to continue.
-		if ( ! isset( $_POST['vpm_unschedule_post'] ) || 1 != $_POST['vpm_unschedule_post'] ) {
-			return;
-		}
-
-		// `save_post` triggers for everything, including revisions; if this is a revision, we don't care.
-		if ( wp_is_post_revision( $post_ID ) ) {
+		// If our custom parameter isn't set, we don't need to continue. Furthermore, `save_post` triggers for everything,
+		// including revisions; if this is a revision, we don't care.
+		if ( ! isset( $_POST['vpm_unschedule_post'] ) || 1 != $_POST['vpm_unschedule_post'] || wp_is_post_revision( $post_ID ) ) {
 			return;
 		}
 
