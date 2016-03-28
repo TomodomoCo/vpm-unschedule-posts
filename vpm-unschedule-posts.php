@@ -69,9 +69,9 @@ class Vpm_Unschedule_Posts {
 	}
 
 	/**
-	 * Handle the 'save_post' action, unscheduling the post if our custom parameter is set in the $_POST.
+	 * Handle the `save_post` action, unscheduling the post if our custom parameter is set in the $_POST.
 	 *
-	 * @param $post_ID int  ID of the WP_Post affected by the 'save_post' action.
+	 * @param $post_ID int  ID of the WP_Post affected by the `save_post` action.
 	 */
 	public function process_post_save( $post_ID ) {
 		// If our custom parameter isn't set, we don't need to continue.
@@ -79,10 +79,21 @@ class Vpm_Unschedule_Posts {
 			return;
 		}
 
-		// 'save_post' triggers for everything, including revisions; if this is a revision, we don't care.
+		// `save_post` triggers for everything, including revisions; if this is a revision, we don't care.
 		if ( wp_is_post_revision( $post_ID ) ) {
 			return;
 		}
+
+		// Unhook this function, to prevent an infinite loop on the `save_post` action.
+		remove_action( 'save_post', array( $this, 'process_post_save' ) );
+
+		wp_update_post( array(
+			'ID'            => $post_ID,
+			'post_date'     => '0000-00-00 00:00:00',
+			'post_date_gmt' => '0000-00-00 00:00:00'
+		) );
+
+		add_action( 'save_post', array( $this, 'process_post_save' ) );
 	}
 
 }
