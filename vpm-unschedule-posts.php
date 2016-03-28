@@ -29,6 +29,8 @@ class Vpm_Unschedule_Posts {
 	 */
 	public function init() {
 		add_action( 'admin_enqueue_scripts', array( $this, 'add_admin_js' ) );
+
+		add_action( 'post_submitbox_misc_actions', array( $this, 'add_unschedule_ui' ) );
 	}
 
 	public function add_admin_js() {
@@ -43,6 +45,21 @@ class Vpm_Unschedule_Posts {
 				false,
 				true
 			);
+		}
+	}
+
+	/**
+	 * Add the unschedule UI, if the current post has a date in the future or a scheduled post status.
+	 *
+	 * @param $post WP_Post
+	 */
+	public function add_unschedule_ui($post) {
+		if ( time() < get_post_time( 'U', true, $post->ID ) || 'future' == $post->post_status ) {
+			?>
+			<div class="misc-pub-section">
+				<a href="javascript;" class="vpm-js-unschedule-post">Unschedule</a>
+			</div>
+			<?php
 		}
 	}
 
