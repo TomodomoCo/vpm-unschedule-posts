@@ -1,0 +1,16 @@
+{
+  "name": "vanpattenmedia/vpm-unschedule-posts",
+  "description": "Adds a UI to unschedule any post type.",
+  "keywords": ["wordpress", "plugin"],
+  "homepage": "https://www.vanpattenmedia.com/",
+  "authors": [
+    {
+      "name": "Lucas Cherkewski",
+      "homepage": "http://lucascherkewski.com/"
+    }
+  ],
+  "type": "wordpress-plugin",
+  "require": {
+    "composer/installers": "~1.0"
+  }
+}
