@@ -33,6 +33,9 @@ class Vpm_Unschedule_Posts {
 		add_action( 'post_submitbox_misc_actions', array( $this, 'add_unschedule_ui' ) );
 	}
 
+	/**
+	 * Enqueue JS to enable the UI.
+	 */
 	public function add_admin_js() {
 		$screen = get_current_screen();
 
