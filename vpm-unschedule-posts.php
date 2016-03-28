@@ -89,6 +89,7 @@ class Vpm_Unschedule_Posts {
 			'post_status'   => 'draft',
 		) );
 
+		// Rehook the function, now that the infinite loop is avoided.
 		add_action( 'save_post', array( $this, 'process_post_save' ) );
 	}
 
