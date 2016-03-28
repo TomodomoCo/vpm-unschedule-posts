@@ -85,7 +85,8 @@ class Vpm_Unschedule_Posts {
 		wp_update_post( array(
 			'ID'            => $post_ID,
 			'post_date'     => '0000-00-00 00:00:00',
-			'post_date_gmt' => '0000-00-00 00:00:00'
+			'post_date_gmt' => '0000-00-00 00:00:00',
+			'post_status'   => 'draft',
 		) );
 
 		add_action( 'save_post', array( $this, 'process_post_save' ) );
