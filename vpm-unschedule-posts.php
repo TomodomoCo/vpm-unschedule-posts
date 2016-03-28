@@ -13,8 +13,36 @@ $vpm_unschedule_posts = new Vpm_Unschedule_Posts();
 
 class Vpm_Unschedule_Posts {
 
-	public function __construct() {
+	public $plugin_url;
+	public $plugin_dir;
 
+	public function __construct() {
+		// Add all our hooks.
+		add_action( 'init', array( $this, 'init' ) );
+	}
+
+	/**
+	 * Any WP actions we need to hook into for our plugin, we'll do so here.
+	 */
+	public function init() {
+		$this->plugin_dir = dirname( __FILE__ );
+		$this->plugin_url = plugins_url( 'vpm-unschedule-posts' );
+
+		add_action( 'admin_enqueue_scripts', array( $this, 'add_admin_js' ) );
+	}
+
+	public function add_admin_js() {
+		$screen = get_current_screen();
+
+		if ( in_array( $screen->parent_base, array( 'post', 'post-new', 'edit' ) ) ) {
+			wp_enqueue_script(
+				'vpm-unschedule-script',
+				$this->plugin_url . '/assets/javascripts/vpm-unschedule-posts.js',
+				array('jquery'),
+				false,
+				true
+			);
+		}
 	}
 
 }
