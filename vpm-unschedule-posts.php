@@ -31,6 +31,8 @@ class Vpm_Unschedule_Posts {
 		add_action( 'admin_enqueue_scripts', array( $this, 'add_admin_js' ) );
 
 		add_action( 'post_submitbox_misc_actions', array( $this, 'add_unschedule_ui' ) );
+
+		add_action( 'save_post', array( $this, 'process_post_save' ) );
 	}
 
 	/**
@@ -56,13 +58,30 @@ class Vpm_Unschedule_Posts {
 	 *
 	 * @param $post WP_Post
 	 */
-	public function add_unschedule_ui($post) {
+	public function add_unschedule_ui( $post ) {
 		if ( time() < get_post_time( 'U', true, $post->ID ) || 'future' == $post->post_status ) {
 			?>
 			<div class="misc-pub-section">
 				<a href="#" id="vpm-js-unschedule-post">Unschedule</a>
 			</div>
 			<?php
+		}
+	}
+
+	/**
+	 * Handle the 'save_post' action, unscheduling the post if our custom parameter is set in the $_POST.
+	 *
+	 * @param $post_ID int  ID of the WP_Post affected by the 'save_post' action.
+	 */
+	public function process_post_save( $post_ID ) {
+		// If our custom parameter isn't set, we don't need to continue.
+		if ( ! isset( $_POST['vpm_unschedule_post'] ) || 1 != $_POST['vpm_unschedule_post'] ) {
+			return;
+		}
+
+		// 'save_post' triggers for everything, including revisions; if this is a revision, we don't care.
+		if ( wp_is_post_revision( $post_ID ) ) {
+			return;
 		}
 	}
 
