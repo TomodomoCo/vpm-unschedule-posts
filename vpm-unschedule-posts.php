@@ -86,7 +86,7 @@ class Vpm_Unschedule_Posts {
 			'ID'            => $post_ID,
 			'post_date'     => '0000-00-00 00:00:00',
 			'post_date_gmt' => '0000-00-00 00:00:00',
-			'post_status'   => 'draft',
+			'post_status'   => apply_filters('vpm_status_after_unscheduling', 'draft'),
 		) );
 
 		// Rehook the function, now that the infinite loop is avoided.
