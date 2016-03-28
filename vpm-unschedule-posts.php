@@ -62,7 +62,7 @@ class Vpm_Unschedule_Posts {
 		if ( time() < get_post_time( 'U', true, $post->ID ) || 'future' == $post->post_status ) {
 			?>
 			<div class="misc-pub-section">
-				<a href="#" id="vpm-js-unschedule-post">Unschedule</a>
+				<a href="#" id="vpm-js-unschedule-post"><?php _e( 'Unschedule', 'vpm' ); ?></a>
 			</div>
 			<?php
 		}
