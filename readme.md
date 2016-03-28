@@ -2,6 +2,18 @@
 
 This plugin adds an "Unschedule" feature to posts that have been scheduled in the WP editor. Supports posts, pages, and custom post types.
 
+## Options
+
+By default, the plugin sets an unscheduled post to the `draft` [post status](https://codex.wordpress.org/Post_Status). If you’d rather use a
+different post status, hook into the `vpm_status_after_unscheduling` filter to change it:
+
+```php
+function change_unscheduling_target_status( $post_status ) {
+    return 'your_post_status';
+}
+add_filter( 'vpm_status_after_unscheduling', 'change_unscheduling_target_status' );
+```
+
 ## License
 
 **Copyright (c) 2016 [Van Patten Media Inc.](https://www.vanpattenmedia.com/) All rights reserved.**
