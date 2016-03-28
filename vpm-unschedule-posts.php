@@ -17,6 +17,9 @@ class Vpm_Unschedule_Posts {
 	public $plugin_dir;
 
 	public function __construct() {
+		$this->plugin_dir = dirname( __FILE__ );
+		$this->plugin_url = plugins_url( 'vpm-unschedule-posts' );
+
 		// Add all our hooks.
 		add_action( 'init', array( $this, 'init' ) );
 	}
@@ -25,9 +28,6 @@ class Vpm_Unschedule_Posts {
 	 * Any WP actions we need to hook into for our plugin, we'll do so here.
 	 */
 	public function init() {
-		$this->plugin_dir = dirname( __FILE__ );
-		$this->plugin_url = plugins_url( 'vpm-unschedule-posts' );
-
 		add_action( 'admin_enqueue_scripts', array( $this, 'add_admin_js' ) );
 	}
 
