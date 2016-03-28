@@ -34,11 +34,12 @@ class Vpm_Unschedule_Posts {
 	public function add_admin_js() {
 		$screen = get_current_screen();
 
-		if ( in_array( $screen->parent_base, array( 'post', 'post-new', 'edit' ) ) ) {
+		if ( in_array( $screen->base, array( 'post', 'edit' ) ) ) {
+
 			wp_enqueue_script(
 				'vpm-unschedule-script',
 				$this->plugin_url . '/assets/javascripts/vpm-unschedule-posts.js',
-				array('jquery'),
+				array( 'jquery' ),
 				false,
 				true
 			);
