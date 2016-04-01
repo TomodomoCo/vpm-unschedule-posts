@@ -58,10 +58,20 @@ class Vpm_Unschedule_Posts {
 	 * @param $post WP_Post
 	 */
 	public function add_unschedule_ui( $post ) {
+		$unschedule_text = '';
+
+		if ( time() < get_post_time( 'U', true, $post->ID ) ) {
+			$unschedule_text = __( 'Remove scheduled time', 'vpm' );
+		}
+
+		if ( 'future' == $post->post_status ) {
+			$unschedule_text = __( 'Unschedule', 'vpm' );
+		}
+
 		if ( time() < get_post_time( 'U', true, $post->ID ) || 'future' == $post->post_status ) {
 			?>
 			<div class="misc-pub-section">
-				<a href="#" id="vpm-js-unschedule-post"><?php _e( 'Unschedule', 'vpm' ); ?></a>
+				<a href="#" id="vpm-js-unschedule-post"><?php echo $unschedule_text; ?></a>
 			</div>
 			<?php
 		}
